@@ -3,6 +3,7 @@ from ..utils_class import *
 from .object import Object
 from .star import Star
 from .planet import Planet
+from .ship import Ship
 
 import random
 import numpy as np
@@ -135,9 +136,10 @@ class StarSystem(Object):
         RESET = "\033[0m"
         BOLD = "\033[1m"
 
-        PLANET_ICON_COLOR = "\033[38;5;209m"     # Soft gold
-        STAR_ICON_COLOR = "\033[38;5;226m"     # Soft goldc
-        MOON_ICON_COLOR = "\033[38;5;47m"     # Soft gold
+        PLANET_ICON_COLOR = "\033[38;5;209m"     
+        STAR_ICON_COLOR = "\033[38;5;226m"     
+        MOON_ICON_COLOR = "\033[38;5;47m"     
+        SHIP_ICON_COLOR = "\033[38;5;199m"     
 
 
         NAME_COLOR = "\033[38;5;221m"     # Soft gold
@@ -175,6 +177,12 @@ class StarSystem(Object):
                     f"{LABEL_COLOR}Orbit:{RESET} {VALUE_COLOR}{body.orbit_radius:3.3f} au{RESET} \t"
                     f"{LABEL_COLOR}Radius:{RESET} {VALUE_COLOR}{body.radius} R⊕{RESET}    \t"
                     f"{LABEL_COLOR}Density:{RESET} {VALUE_COLOR}{body.density} g/cm³{RESET} \t"
+                )
+            elif isinstance(body, Ship):
+                symbol = f"{BOLD}{SHIP_ICON_COLOR} ➤"
+                print(
+                    f"{spacer}{symbol} {BOLD}{NAME_COLOR}{body.name}{RESET}   "
+                    f"{body.owner_color} {body.owner}    {LABEL_COLOR} {body.type} {RESET}"
                 )
 
             last_index = len(body.orbit) - 1
