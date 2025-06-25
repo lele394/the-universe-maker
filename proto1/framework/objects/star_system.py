@@ -181,7 +181,7 @@ class StarSystem(Object):
             elif isinstance(body, Ship):
                 symbol = f"{BOLD}{SHIP_ICON_COLOR} ➤"
                 print(
-                    f"{spacer}{symbol} {BOLD}{NAME_COLOR}{body.name}{RESET}   "
+                    f"{spacer}{symbol} {BOLD}{body.owner_color}{body.name}{RESET}   "
                     f"{body.owner_color} {body.owner}    {LABEL_COLOR} {body.type} {RESET}"
                 )
 

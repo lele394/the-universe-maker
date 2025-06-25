@@ -1,5 +1,8 @@
 import framework as fr
+import numpy as np
 
+
+# ================================= Star creation
 # print(fr.Star(10, "O"))
 # print(fr.Star(10, "B"))
 # print(fr.Star(10, "A"))
@@ -8,8 +11,39 @@ import framework as fr
 # print(fr.Star(10, "K"))
 # print(fr.Star(1, "M"))
 
-# fr.Planet(2, 1, planet_type="Gas")
 
+# ============================ Planet creation
+planet = fr.Planet(2, 1, planet_type="Gas")
+
+planet.scan()
+
+print(planet)
+
+
+def to_serializable(obj):
+    data = {}
+    for k, v in obj.__dict__.items():
+        if isinstance(v, np.ndarray):
+            data[k] = v.tolist()  # Convert to nested lists
+        elif hasattr(v, "__dict__"):
+            data[k] = to_serializable(v)
+        elif isinstance(v, (list, dict, str, int, float, bool)) or v is None:
+            data[k] = v
+        else:
+            data[k] = str(v)  # Fallback for unsupported types
+    return data
+
+
+
+import json
+serial = to_serializable(planet)
+data = json.dumps(serial, indent=2)
+# print(data)
+
+# import matplotlib.pyplot as plt
+# plt.imshow(serial["heightmap"])
+# plt.show()
+# =============================== StarSysem creation
 # ss = fr.StarSystem(1, name="HIP-2234")
 # ss.generate(7)
 # # print(ss)
@@ -28,19 +62,7 @@ import framework as fr
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+# =================================== Save and load stuff
 # action = "load"
 
 # if action == "create":
@@ -57,9 +79,6 @@ import framework as fr
 #         pickle.dump(universe, f)
 
 
-
-
-
 # elif action == "load":
 #     import pickle
 #     with open("universe.pkl", "rb") as f:
@@ -69,6 +88,7 @@ import framework as fr
 #     ss2.display()
     # p2 = ss2.get_object(ss2.name+"-I")
 
+# =================================== END Save and load stuff END
 
 
 
@@ -129,50 +149,46 @@ import framework as fr
 
 
 
+# # ====================== Generate universe, spawn and move ship around thest
+
+# import os
+
+# universe = fr.Universe()
+# universe.generate(3, 6.0)
+# universe.info()
+
+# keys_list = list(universe.systems.keys())
+# ss1 = universe.systems[keys_list[0]]
+# ss2 = universe.systems[keys_list[1]]
 
 
-
-
-
-
-universe = fr.Universe()
-universe.generate(3, 1.0)
-universe.info()
-
-keys_list = list(universe.systems.keys())
-ss1 = universe.systems[keys_list[0]]
-ss2 = universe.systems[keys_list[1]]
-print()
-print()
-print()
-ss1.display()
+# os.system("clear")
+# ss1.display()
 # ss2.display()
-print()
-print()
-print()
+# input()
 
-p1 = ss1.get_object(ss1.name+"-I")
-p2 = ss2.get_object(ss2.name+"-I")
+# p1 = ss1.get_object(ss1.name+"-I")
+# p2 = ss2.get_object(ss2.name+"-I")
 
-ship_stats = {
-    "name": "SOME SHIP",
-    "type": "frigate",
-}
+# ship_stats = {
+#     "name": "SOME SHIP",
+#     "type": "frigate",
+# }
 
-ship = fr.Ship(5, ship_stats, p1)
-ss1.display()
-ss2.display()
-print()
+# ship = fr.Ship(5, ship_stats, p1)
+# os.system("clear")
+# ss1.display()
+# ss2.display()
+# input()
 
-ship.move(p2)
+# ship.move(p2)
 
-print()
-print()
-print()
-print()
-print()
+# os.system("clear")
+# ss1.display()
+# ss2.display()
+# input()
 
+# select = ss2.get_object("SOME SHIP")
+# print(select)
 
-
-ss1.display()
-ss2.display()
+# # ====================== END Generate universe, spawn and move ship around thest END
